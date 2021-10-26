@@ -9,12 +9,12 @@ const App = observer(() => {
   const movieStore: any = useContext(Context);
 
   useEffect(() => {
-    movieStore.getPopualarMovies();
+    movieStore.getMovies();
   }, []);
-  console.log(movieStore.allImdbMovies);
+  
   return (
     <div className="row row-cols-1 row-cols-md-3 g-4">
-      {movieStore.allImdbMovies.map((movie: IMovie) => {
+      {movieStore.imdbMovies.map((movie: IMovie) => {
         return <MoviesList key={movie.imdb_id} results={movie} />
       })}
     </div>

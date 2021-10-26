@@ -3,22 +3,29 @@ import { FindMovieByImdbId, FindPopularMovies } from "../services/movie-service"
 import { IMovie, IMovies } from "../types/types";
 
 export default class MovieStore {
-    imdbMovies: any;
-    popularMovies: any;
+    _imdbMovies: any;
+    _movies: any;
 
 
     constructor() {
-        this.imdbMovies = [];
-        this.popularMovies = [];
+        this._imdbMovies = [];
+        this._movies = [];
         makeAutoObservable(this);
     }
 
-    setImdbMovie(movie: IMovie[]) {
-        this.imdbMovies.push(movie)
+    setMovies(movies: IMovies[]) {
+        this._movies = movies;
     }
 
-    setPopularMovies(movies: IMovies[]) {
-        console.log("hi");
+    setImdbMovie(movie: IMovie[]) {
+        this._imdbMovies.push(movie)
+    }
+
+    get imdbMovies() {
+        return toJS(this._imdbMovies);
+    }
+
+    getMovieByImdbId(movies: IMovies[]) {
         movies.map(async (movie) => {
            const response = await FindMovieByImdbId(movie.imdb_id);
            
@@ -26,34 +33,12 @@ export default class MovieStore {
         })
     }
 
-    get allPopularMovies() {
-        return toJS(this.popularMovies);
-    }
-
-    get allImdbMovies() {
-        return toJS(this.imdbMovies);
-    }
-
-    async getPopualarMovies() {
+    async getMovies() {
         try {
             const response = await FindPopularMovies();
             
-            this.setPopularMovies(response);
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    async getImdbMovie() {
-        try {
-            let response;
-            console.log(this.getPopualarMovies);
-            for (let i = 0; i < this.allPopularMovies.length; i++) {
-                const response = await FindMovieByImdbId(this.allPopularMovies[i]);
-                // this.setImdbMovie(response);
-            }
-            
-            console.log(response);
+            this.setMovies(response);
+            this.getMovieByImdbId(response);
         } catch (e) {
             console.log(e);
         }
