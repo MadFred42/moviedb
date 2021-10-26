@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IMovie, IMovies } from "../types/types";
 
-export const findPopularMovies = async () => {
+export const FindPopularMovies = async () => {
   const url = 'https://data-imdb1.p.rapidapi.com/movie/order/byPopularity/';
   const response = await axios.get<{ results: IMovies[] }>(url, {
     headers: {
@@ -13,7 +13,7 @@ export const findPopularMovies = async () => {
   return response.data.results;
 };
 
-export const findMovieByImdbId = async (id: string) => {
+export const FindMovieByImdbId = async (id: string) => {
   const url = `https://data-imdb1.p.rapidapi.com/movie/id/${id}/`
   
   const response = await axios.get<{results: IMovie[]}>(url, {
@@ -22,6 +22,6 @@ export const findMovieByImdbId = async (id: string) => {
       'x-rapidapi-key': 'ed88023110msh876b7e3769c4bc5p1157adjsn0672b9122c03'
     }
   });
-
+  
   return response.data.results;
 }

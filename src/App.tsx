@@ -1,30 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useEffect, useState } from 'react';
+import { CardGroup } from 'react-bootstrap';
+import { Context } from '.';
 import MoviesList from './components/moviesList';
-import { findMovieByImdbId, findPopularMovies } from './services/movie-service';
 import { IMovie, IMovies } from './types/types';
 
-const App = () => {
-  const [movies, setMovies] = useState<IMovies[]>();
-  const [movie, setMovie] = useState<IMovie[]>();
-  useEffect(() => {
-    findPopularMovies()
-    .then(setMovies);
-  }, []);
+const App = observer(() => {
+  const movieStore: any = useContext(Context);
 
   useEffect(() => {
-    movies?.map(movie => {
-      return findMovieByImdbId(movie.imdb_id)
-      .then(setMovie)
-    })
+    movieStore.getPopualarMovies();
   }, []);
-  console.log(movie);
+  console.log(movieStore.allImdbMovies);
   return (
-    <div>
-      {movies?.map(movie => {
+    <div className="row row-cols-1 row-cols-md-3 g-4">
+      {movieStore.allImdbMovies.map((movie: IMovie) => {
         return <MoviesList key={movie.imdb_id} results={movie} />
       })}
     </div>
   );
-}
+});
 
 export default App;
