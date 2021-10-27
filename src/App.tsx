@@ -1,24 +1,25 @@
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect, useState } from 'react';
-import { CardGroup } from 'react-bootstrap';
+import React, { useContext, useEffect } from 'react';
 import { Context } from '.';
-import MoviesList from './components/moviesList';
-import { IMovie, IMovies } from './types/types';
+import NavBar from './components/navBar';
+import { MainPage, MoviePage } from './pages';
+import { Switch, Route } from 'react-router-dom';
 
-const App = observer(() => {
-  const movieStore: any = useContext(Context);
+const App = () => {
+  const movieStore = useContext(Context);
 
   useEffect(() => {
     movieStore.getMovies();
   }, []);
   
   return (
-    <div className="row row-cols-1 row-cols-md-3 g-4">
-      {movieStore.imdbMovies.map((movie: IMovie) => {
-        return <MoviesList key={movie.imdb_id} results={movie} />
-      })}
-    </div>
+    <>
+      <NavBar />
+      <Switch>
+        <Route path='/' component={MainPage} exact />
+        <Route path='/movie/:id' component={MoviePage} />
+      </Switch>
+    </>
   );
-});
+};
 
 export default App;

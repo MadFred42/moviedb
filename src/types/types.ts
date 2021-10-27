@@ -29,3 +29,7 @@ export interface IMovies {
     popularity: number;
     title: string;
 }
+
+export interface IParams {
+    id: string;
+}
