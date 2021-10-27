@@ -1,14 +1,17 @@
 import { makeAutoObservable, toJS } from "mobx";
-import { FindMovieByImdbId, FindPopularMovies } from "../services/movie-service";
-import { IMovie, IMovies } from "../types/types";
+import { findActorsFulInfo, findMovieActors, FindMovieByImdbId, FindPopularMovies } from "../services/movie-service";
+import { IActor, IMovie, IMovies, IRoles } from "../types/types";
 
 export default class MovieStore {
+    _actors: any;
     _genres: any;
     _imdbMovies: any;
     _movie: any;
     _movies: any;
+    _roles: any;
 
     constructor() {
+        this._actors = [];
         this._genres = [
             'Action',
             'Adventure',
@@ -34,7 +37,17 @@ export default class MovieStore {
         this._imdbMovies = [];
         this._movie = {};
         this._movies = [];
+        this._roles = [];
         makeAutoObservable(this);
+    };
+
+    setActors(actors: IActor) {
+        this._actors.push(actors);
+    }
+
+    setImdbMovie(movie: IMovie[]) {
+        this._imdbMovies.push(movie)
+        localStorage.setItem('movies', JSON.stringify(this.imdbMovies));
     };
 
     setMovie(movie: IMovie[]) {
@@ -45,10 +58,13 @@ export default class MovieStore {
         this._movies = movies;
     };
 
-    setImdbMovie(movie: IMovie[]) {
-        this._imdbMovies.push(movie)
-        localStorage.setItem('movies', JSON.stringify(this.imdbMovies));
-    };
+    setRoles(roles: IRoles) {
+        this._roles = roles;
+    }
+
+    get actors() {
+        return toJS(this._actors);
+    }
 
     get genres() {
         return toJS(this._genres);
@@ -62,6 +78,10 @@ export default class MovieStore {
         return toJS(this._imdbMovies);
     };
 
+    get roles() {
+        return toJS(this._roles);
+    }
+
     getMovieByImdbId(movies: IMovies[]) {
         movies.map(async (movie) => {
            const response = await FindMovieByImdbId(movie.imdb_id);
@@ -70,17 +90,37 @@ export default class MovieStore {
         });
     };
 
-    getMovie(movie: string) {
+    getActorsFullInfo(actors: any) {
+        actors.map(async (actor: any) => {
+            const response = await findActorsFulInfo(actor.actor.imdb_id);
+            response.role = actor.role
+            this.setActors(response);
+        })
+    }
+
+    async getMovie(movie: string) {
         const local: any = localStorage.getItem('movies');
         const movies = JSON.parse(local);
         const result = movies.find((item: any) => item.imdb_id === movie);
         this.setMovie(result);
     };
 
+    async getActors(id: string) {
+        try {
+            const response = await findMovieActors(id);
+            if (!response) {
+                return;
+            }
+            this.setRoles(response);
+            this.getActorsFullInfo(response);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     async getMovies() {
         try {
             const response = await FindPopularMovies();
-            
             this.setMovies(response);
             this.getMovieByImdbId(response);
         } catch (e) {

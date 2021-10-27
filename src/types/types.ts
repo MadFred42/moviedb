@@ -7,6 +7,22 @@ export interface IKeywords {
     keyword: string;
 }
 
+export interface IActor {
+    imdb_id: string;
+    image_url: string;
+    name: string;
+    role: string;
+}
+
+export interface IRoles {
+    role: string;
+    actor: IActor
+}
+
+export interface IActorsResults {
+    roles: IRoles;
+}
+
 export interface IMovie {
     banner: string;
     content_rating: string;
