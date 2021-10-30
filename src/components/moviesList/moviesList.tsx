@@ -1,34 +1,38 @@
 import React from 'react';
 import { IMovie } from '../../types/types';
 import { useHistory } from 'react-router';
+import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 interface MoviesPropsList {
     results: IMovie
 }
 
-const MoviesList= ({ results }: MoviesPropsList) => {
+export const MoviesList= ({ results }: MoviesPropsList) => {
     const history = useHistory();
-
+    const { banner, imdb_id, rating, title } = results;
+    
     return (
-        <div className="card mb-0 p-0" style={{maxWidth: "300px"}}>
-            <img src={results.banner} className="img-fluid rounded-start" alt="banner" style={{height: '400px'}} />
-            <div className="card-body" style={{margin: '0 auto'}} >
-                <h4 
-                    className="card-title" 
-                    style={{cursor: 'pointer', textAlign: 'center'}}
-                    onClick={() => history.push({pathname: `/movie/${results.imdb_id}`, state: {id: results.imdb_id}})}>
-                        {results.title}
-                </h4>
-            </div>
-            <div className='footer rounded d-flex' style={{backgroundColor: 'lightgray', margin: '0 auto'}}>
-                    <i className="fas fa-star" style={{alignSelf: 'center', color: 'yellow', marginLeft: '5px'}} />
-                    <big className="text" style={{color: 'black', margin: '0 .5em'}}>IMDb: {results.rating}</big>
-            </div>
-        </div>
+        <Card style={{ width: '18rem' }}>
+            <Card.Img src={ banner } style={{ height: '350px' }} variant="top" />
+            <Card.Body>
+                <Card.Title 
+                    onClick={() => history.push({ pathname: `/movie/${imdb_id}`, state: { id: imdb_id } })}
+                    style={{ cursor: 'pointer', textAlign: 'center' }}>
+                        { title }
+                </Card.Title>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+                <ListGroupItem className="mx-auto">
+                    <i 
+                        className="fas fa-star" 
+                        style={{ alignSelf: 'center', color: 'yellow', marginLeft: '5px' }} />
+                    <big 
+                        className="text" 
+                        style={{ color: 'black', margin: '0 .5em' }}>
+                            IMDb: { rating }
+                    </big>
+                </ListGroupItem>
+            </ListGroup>
+        </Card>
     );
-}
-
-
-
-export default MoviesList;
-
+};

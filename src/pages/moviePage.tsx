@@ -4,21 +4,19 @@ import { Context } from '..';
 import Movie from '../components/movieInfo/';
 import { IParams } from '../types/types';
 
-const MoviePage = () => {
+export const MoviePage = () => {
+    const { movieStore, creatorsStore } = useContext(Context);
     const params: IParams = useParams();
-    const movieStore = useContext(Context);
 
     useEffect(() => {
         movieStore.getMovie(params.id);
     }, []);
     
     useEffect(() => {
-        movieStore.getActors(params.id);
+        creatorsStore.getActors(params.id);
     }, []);
     
     return (
         <Movie />
     )
 };
-
-export default MoviePage;

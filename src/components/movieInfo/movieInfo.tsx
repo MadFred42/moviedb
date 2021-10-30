@@ -1,16 +1,13 @@
 import React, { useContext } from 'react';
 import { Context } from '../..';
 import { observer } from 'mobx-react-lite';
-import ActorsList from './actorsList';
+import ActorsList from '../actorsList';
+import { ListGroup } from 'react-bootstrap';
+import CarouselModel from '../carouselModel';
 
-const MovieInfo = observer(() => {
-    const movieStore = useContext(Context);
-    const movie = movieStore.movie;
-
-    if (!movie) {
-        return <div>Loading...</div>
-    }
-    
+export const MovieInfo = observer(() => {
+    const { movieStore } = useContext(Context);
+    const { content_rating, imdb_id, plot, rating, title, type, year } = movieStore.movie;
     const ucFirst = (str: string) => {
         if (!str) return str;
       
@@ -20,31 +17,44 @@ const MovieInfo = observer(() => {
     return (
         <div>
             <div className="card mb-3">
-                <div className="border p-3 mb-2 bg-secondary text-white">
-                    <h1 className="card-title">{movie.title}</h1>
-                    <ul className="list-group list-group-horizontal">
-                        <li className="list-group-item">{ucFirst(movie.type)}</li>
-                        <li className="list-group-item">{movie.content_rating}</li>
-                        <li className="list-group-item">{movie.year }</li>
-                    </ul>
+                <div className="bg-secondary d-flex justify-content-between mb-2 p-3 text-white">
+                    <div>
+                        <h1 className="card-title">{ title }</h1>
+                        <ListGroup horizontal>
+                            <ListGroup.Item>{ ucFirst(type) }</ListGroup.Item>
+                            <ListGroup.Item>{ content_rating }</ListGroup.Item>
+                            <ListGroup.Item>{ year }</ListGroup.Item>
+                        </ListGroup>
+                    </div>
+                    <div className="d-block">
+                    <h1 className="card-title">IMDb RATING</h1>
+                        <ListGroup horizontal className="justify-content-center f">
+                            <ListGroup.Item className="list-group-item">
+                                <i className="fas fa-star"></i>
+                            </ListGroup.Item>
+                            <ListGroup.Item className="list-group-item">{ rating }/10</ListGroup.Item>
+                        </ListGroup>
+                    </div>
                 </div>
-                <img className="card-img-top" src={movie.banner} alt="cap" style={{height: '500px', margin: '0 auto', width: '400px'}} />
-                <div className="card-body">
-                    <p className="card-text">{movie.plot}</p>
-                    <p className="card-text"><small className="text-muted">{movie.rating}</small></p>
+            </div>
+            <div className="d-flex justify-content-between" style={{ height: '40em' }}>
+                <CarouselModel props={ movieStore.movie } />
+                <div className="d-block" style={{ width: '30%' }}>
+                    <h2 style={{ textAlign: 'center' }}>Cast:</h2>
+                    <div>
+                        <ActorsList />
+                    </div>
                 </div>
+            </div>
+            
+            <div className="card-body" >
+                <p className="card-text">{ plot }</p>
             </div>
             <button 
                 className='btn btn-outline-secondary'
-                onClick={() => window.open(`https://www.imdb.com/title/${movie.imdb_id}/`)}>
+                onClick={() => window.open(`https://www.imdb.com/title/${imdb_id}/`)}>
                     Watch on IMDB
             </button>
-            <div>
-                <h2>Cast:</h2>
-                <ActorsList />
-            </div>
         </div>
     );
 });
-
-export default MovieInfo;

@@ -1,3 +1,14 @@
+export interface ICreators {
+    imdb_id: string;
+    image_url: string;
+    name: string;
+    role: string;
+}
+
+export interface ICreatorsResults {
+    roles: IRoles;
+}
+
 export interface IGenre {
     id: number;
     genre: string;
@@ -5,22 +16,6 @@ export interface IGenre {
 
 export interface IKeywords {
     keyword: string;
-}
-
-export interface IActor {
-    imdb_id: string;
-    image_url: string;
-    name: string;
-    role: string;
-}
-
-export interface IRoles {
-    role: string;
-    actor: IActor
-}
-
-export interface IActorsResults {
-    roles: IRoles;
 }
 
 export interface IMovie {
@@ -36,6 +31,7 @@ export interface IMovie {
     popularity: number;
     rating: number;
     title: string;
+    trailer: string;
     type: string;
     year: number;
 }
@@ -48,4 +44,9 @@ export interface IMovies {
 
 export interface IParams {
     id: string;
+}
+
+export interface IRoles {
+    role: string;
+    actor: ICreators
 }

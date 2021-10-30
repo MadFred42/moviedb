@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IActor, IActorsResults, IMovie, IMovies, IRoles } from "../types/types";
+import { IMovie, IMovies } from "../types/types";
 
 export const FindPopularMovies = async () => {
   const url = 'https://data-imdb1.p.rapidapi.com/movie/order/byPopularity/';
@@ -24,31 +24,4 @@ export const FindMovieByImdbId = async (id: string) => {
   });
   
   return response.data.results;
-  };
-
-export const findMovieActors = async (id: string) => {
-  console.log(id);
-  const url = `https://data-imdb1.p.rapidapi.com/movie/id/${id}/cast/`;
-
-  const response = await axios.get<{results: IActorsResults}>(url, {
-    headers: {
-      'x-rapidapi-host': 'data-imdb1.p.rapidapi.com',
-      'x-rapidapi-key': 'ed88023110msh876b7e3769c4bc5p1157adjsn0672b9122c03'
-    }
-  });
-  
-  return response.data.results.roles;
-}
-
-export const findActorsFulInfo = async (id: string) => {
-  const url = `https://data-imdb1.p.rapidapi.com/actor/id/${id}/`;
-
-  const response = await axios.get<{results: IActor}>(url, {
-    headers: {
-      'x-rapidapi-host': 'data-imdb1.p.rapidapi.com',
-      'x-rapidapi-key': 'ed88023110msh876b7e3769c4bc5p1157adjsn0672b9122c03'
-    }
-  });
-
-  return response.data.results;
-}
+};

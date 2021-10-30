@@ -1,5 +1,5 @@
-import MainPage from "./mainPage";
-import MoviePage from "./moviePage";
+import { MainPage } from "./mainPage";
+import { MoviePage } from "./moviePage";
 
 export {
     MainPage,
