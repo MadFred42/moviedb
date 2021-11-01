@@ -9,8 +9,8 @@ interface MoviesPropsList {
 
 export const MoviesList= ({ results }: MoviesPropsList) => {
     const history = useHistory();
-    const { banner, imdb_id, rating, title } = results;
-    
+    const { banner, gen, imdb_id, rating, title } = results;
+    console.log(gen);
     return (
         <Card style={{ width: '18rem' }}>
             <Card.Img src={ banner } style={{ height: '350px' }} variant="top" />
@@ -22,6 +22,15 @@ export const MoviesList= ({ results }: MoviesPropsList) => {
                 </Card.Title>
             </Card.Body>
             <ListGroup className="list-group-flush">
+                <ListGroupItem className="mx-auto">
+                    {gen.map((genre: any) => 
+                        <big 
+                            className="text" 
+                            style={{ color: 'black', margin: '0 .5em' }}>
+                                { genre.genre }
+                        </big>
+                    )}
+                </ListGroupItem>
                 <ListGroupItem className="mx-auto">
                     <i 
                         className="fas fa-star" 

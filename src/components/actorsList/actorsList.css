@@ -1,0 +1,6 @@
+@media (max-width: 768px) {
+    .creators-image{
+        height: 5px;
+        width: 5px;
+    }
+}

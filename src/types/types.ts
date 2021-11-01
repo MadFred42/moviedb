@@ -22,7 +22,7 @@ export interface IMovie {
     banner: string;
     content_rating: string;
     description: string;
-    gen: IGenre;
+    gen: IGenre[];
     image_url: string;
     imdb_id: string;
     keywords: IKeywords;
