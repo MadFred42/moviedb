@@ -9,7 +9,7 @@ export const MainPage = observer(() => {
     const { movieStore }: any = useContext(Context);
     
     return (
-        <div className={movieStore.imdbMovies.length === 0 ? 'd-flex justify-content-center' : ''}>
+        <div className={movieStore.imdbMovies.length === 0 ? 'd-flex justify-content-center' : ''} style={{backgroundColor: 'white'}}>
             {
                 movieStore.imdbMovies.length === 0 ?
                 <SpinnerModel height={'20em'} marginTop={'10%'} width={'20em'} /> :

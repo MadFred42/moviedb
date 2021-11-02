@@ -13,6 +13,11 @@ interface IMovieIdProps {
 export const ActorsList = observer(({movieId}: IMovieIdProps) => {
     const { creatorsStore } = useContext(Context);
     const shownActors = creatorsStore.creators.filter((actor: any) => actor.image_url);
+    
+    if (!creatorsStore.roles) {
+        return <>No data...;(</>
+    }
+
     return (
         <Container className={creatorsStore.creators.length === 0 ? "d-flex justify-content-center": ''}>
             {

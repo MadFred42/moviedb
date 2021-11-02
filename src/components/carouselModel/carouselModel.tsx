@@ -10,25 +10,27 @@ export const CarouselModel = ({ props }: ICarouselProps) => {
     const { banner, trailer } = props;
     
     return (
-        <Carousel variant="dark" style={{ width: '70%' }}>
-            <Carousel.Item>
-                <div className="d-flex justify-content-center mx-auto" style={{ width: '60em' }}>
+        <Carousel 
+            className='mx-auto'
+            interval={ null }
+            variant="dark">
+            <Carousel.Item >
+                <div className='d-flex justify-content-center' style={{ height: '50%', width: '50%' }}>
                     <img
                         alt="First slide"
-                        className="d-block"
                         src={ banner }
-                        style={{ height: '40em', width:'70%' }}
+                        style={{ width: '100%'}}
                     />
                 </div>
             </Carousel.Item>
             <Carousel.Item>
-                <div className="d-flex justify-content-center mx-auto">
+                <div className='d-flex justify-content-center' style={{ height: '50%', width: '50%' }}>
                     <iframe src={ trailer }
                         allow='autoplay; encrypted-media'
                         allowFullScreen
                         frameBorder='0'
-                        style={{height: '40em', width:'70%'}}
                         title='video'
+                        style={{ height: '50%', width: '50%' }}
                     />
                 </div>
             </Carousel.Item>

@@ -31,6 +31,11 @@ export default class CreatorsStore {
 
 
     getActorsFullInfo(actors: any) {
+
+        if (!actors) {
+            return;
+        }
+
         const result = actors.map(async (actor: any) => {
             const response = await findActorsFulInfo(actor.actor.imdb_id);
             response.role = actor.role
@@ -44,9 +49,6 @@ export default class CreatorsStore {
     async getActors(id: string) {
         try {
             const response = await findMovieActors(id);
-            if (!response) {
-                return;
-            }
             this.setRoles(response);
             this.getActorsFullInfo(response);
         } catch (e) {

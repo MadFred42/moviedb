@@ -10,7 +10,7 @@ interface MoviesPropsList {
 export const MoviesList= ({ results }: MoviesPropsList) => {
     const history = useHistory();
     const { banner, gen, imdb_id, rating, title } = results;
-    console.log(gen);
+
     return (
         <Card style={{ width: '18rem' }}>
             <Card.Img src={ banner } style={{ height: '350px' }} variant="top" />
@@ -22,14 +22,18 @@ export const MoviesList= ({ results }: MoviesPropsList) => {
                 </Card.Title>
             </Card.Body>
             <ListGroup className="list-group-flush">
-                <ListGroupItem className="mx-auto">
-                    {gen.map((genre: any) => 
-                        <big 
-                            className="text" 
-                            style={{ color: 'black', margin: '0 .5em' }}>
-                                { genre.genre }
-                        </big>
-                    )}
+                <ListGroupItem className="mx-auto p-0">
+                    {gen.map((genre: any, i: any, arr: any) => {
+                        arr.length = 3;
+                        return (
+                            <big 
+                                className="text" 
+                                key={i}
+                                style={{ color: 'black', margin: '0 .5em' }}>
+                                    { genre.genre }
+                            </big>
+                        )
+                    })}
                 </ListGroupItem>
                 <ListGroupItem className="mx-auto">
                     <i 
