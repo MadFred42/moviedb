@@ -2,53 +2,58 @@ import React, { useContext } from 'react';
 import { Context } from '../..';
 import { observer } from 'mobx-react-lite';
 import ActorsList from '../actorsList';
-import CarouselModel from '../carouselModel';
 import MovieInfoHeader from '../movieInfoHeader';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Col, Container, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
 
 export const MovieInfo = observer(() => {
     const { movieStore } = useContext(Context);
-    const { banner, imdb_id, plot, trailer } = movieStore.movie;
+    const { banner, description, imdb_id, gen, plot, trailer } = movieStore.movie;
 
+    console.log(gen);
     return (
-        <div  style={{ height: '1%' }}>
+        <Container className="p-0">
             <MovieInfoHeader />
-            <div className="d-flex justify-content-between" style={{ height: '15%' }}>
-                {/* <CarouselModel props={ movieStore.movie } /> */}
-                <ListGroup horizontal>
-                    <ListGroupItem style={{ height: '15%' }}>
-                        <img
-                            alt="First slide"
-                            src={ banner }
-                            style={{ position: 'relative'}}
-                        />
-                    </ListGroupItem>
-                    <ListGroupItem>
-                        <iframe src={ trailer }
-                            allow='autoplay; encrypted-media'
-                            allowFullScreen
-                            frameBorder='0'
-                            title='video'
-                            style={{ margin: '0 .5%',width: '100%' }}
-                        /> 
-                    </ListGroupItem>
-                </ListGroup>
-                <div className="d-block" style={{ width: '30%' }}>
+            <div className="mb-3">
+            {
+                gen ?
+                gen.map((genre: any) => 
+                    <button className="bg-secondary m-1 rounded-pill text-white">{genre.genre}</button>
+                ) :
+                null
+            }            
+            </div>
+            <Row className="d-flex justify-content-between" style={{ height: '15%' }}>
+                <Col className="d-flex justify-content-between h-50">
+                    <img
+                        alt="banner"
+                        src={ banner }
+                        style={{ height: '100%', width: '33%' }}
+                    />
+                    <iframe
+                        allow='autoplay; encrypted-media'
+                        allowFullScreen
+                        frameBorder='0'
+                        src={ trailer }
+                        style={{ width: '65%' }}
+                        title='video'
+                    />  
+                </Col>
+                <Col md="auto" className="d-block w-100">
                     <h2 style={{ textAlign: 'center' }}>Cast:</h2>
                     <div>
                         <ActorsList movieId={imdb_id}/>
                     </div>
-                </div>
-            </div>
-            
-            <div className="card-body" >
-                <p className="card-text">{ plot }</p>
+                </Col>
+            </Row>
+            <div>
+                <p className="border border-3 border-danger border-bottom-0 h1 mb-4">Description:</p>
+                <p className="border border-3 border-top-0 border-danger card-text h5 p-3 rounded">{ description }</p>
             </div>
             <button 
                 className='btn btn-outline-secondary'
                 onClick={() => window.open(`https://www.imdb.com/title/${imdb_id}/`)}>
                     Watch on IMDB
             </button>
-        </div>
+        </Container>
     );
 });

@@ -6,8 +6,8 @@ export const NavBar = () => {
     const { movieStore } = useContext(Context);
 
     return (
-        <Navbar bg="light" expand="lg">
-            <Container fluid>
+        <Navbar bg="light" className="border-bottom border-2" expand="lg">
+            <Container>
                 <Navbar.Brand href="/">My movieDB</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">

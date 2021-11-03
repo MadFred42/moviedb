@@ -1,0 +1,9 @@
+@media (max-width: 500px) {
+    .mobile {
+        font-size: .75em;
+    }
+    
+    .mobile__title {
+        font-size: 1.25em;
+    }
+}

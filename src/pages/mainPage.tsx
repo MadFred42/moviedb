@@ -7,14 +7,15 @@ import { IMovie } from '../types/types';
 
 export const MainPage = observer(() => {
     const { movieStore }: any = useContext(Context);
+    const mainClass = movieStore.imdbMovies.length === 0 ? 'd-flex justify-content-center' : 'd-flex justify-content-between';
     
     return (
-        <div className={movieStore.imdbMovies.length === 0 ? 'd-flex justify-content-center' : ''} style={{backgroundColor: 'white'}}>
+        <div className={mainClass}>
             {
                 movieStore.imdbMovies.length === 0 ?
-                <SpinnerModel height={'20em'} marginTop={'10%'} width={'20em'} /> :
+                <SpinnerModel height={'15em'} marginTop={'10%'} width={'15em'} /> :
                 <div 
-                    className=" g-4 justify-content-around p-3 row row-cols-1 row-cols-md-3" 
+                    className="g-4 justify-content-between row row-cols-1 m-0 w-100" 
                     style={{ margin: '0 auto', width: '80%' }}
                 >
                     { movieStore.imdbMovies.map((movie: IMovie) => {

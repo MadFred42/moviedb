@@ -12,7 +12,7 @@ export const MoviesList= ({ results }: MoviesPropsList) => {
     const { banner, gen, imdb_id, rating, title } = results;
 
     return (
-        <Card style={{ width: '18rem' }}>
+        <Card className="mx-auto" style={{ width: '18rem' }}>
             <Card.Img src={ banner } style={{ height: '350px' }} variant="top" />
             <Card.Body>
                 <Card.Title 

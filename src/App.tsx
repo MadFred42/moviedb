@@ -13,13 +13,15 @@ const App = () => {
   }, []);
   
   return (
-    <Container style={{ backgroundColor: '#424242', fontFamily: "'Roboto', sans-serif", height: '100%', zIndex: 0 }}>
+    <>
       <NavBar />
-      <Switch>
-        <Route path='/' component={ MainPage } exact />
-        <Route path='/movie/:id' component={ MoviePage } />
-      </Switch>
-    </Container>
+      <Container>
+        <Switch>
+          <Route path='/' component={ MainPage } exact />
+          <Route path='/movie/:id' component={ MoviePage } />
+        </Switch>
+      </Container>
+    </>
   );
 };
 

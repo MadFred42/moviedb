@@ -1,6 +1,26 @@
-@media (max-width: 768px) {
-    .creators-image{
-        height: 5px;
-        width: 5px;
+.mobile__img {
+    height: 7em;
+    width: 7em;
+}
+
+@media (max-width: 500px) {
+    .mobile__img {
+        height: 4em;
+        width: 4em;
+    }
+
+    .mobile__name {
+        font-size: .75em;
+    }
+
+    .mobile__role {
+        font-size: .65em;
+    }
+}
+
+@media (max-width: 360px) {
+    .mobile__img {
+        height: 3em;
+        width: 3em;
     }
 }
