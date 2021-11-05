@@ -1,19 +1,19 @@
 import { makeAutoObservable, toJS } from "mobx";
 import { allGenres } from "../genres";
-import { FindMovieByImdbId, FindPopularMovies } from "../services/movie-service";
+import { FindMovie, FindMovieByGenre, FindMovieByImdbId, FindPopularMovies } from "../services/movie-service";
 import { IMovie, IMovies } from "../types/types";
 
 export default class MovieStore {
     _genres: any;
     _imdbMovies: any;
     _movie: any;
-    _movies: any;
+    _subject: any;
 
     constructor() {
         this._genres = allGenres;
         this._imdbMovies = [];
         this._movie = {};
-        this._movies = [];
+        this._subject = 'byPopularity';
         
         makeAutoObservable(this);
     };
@@ -27,9 +27,10 @@ export default class MovieStore {
         this._movie = movie;
     };
 
-    setMovies(movies: IMovies[]) {
-        this._movies = movies;
-    };
+    setSubject(subject: string | null) {
+        this._subject = subject;
+    }
+
     get genres() {
         return toJS(this._genres);
     }
@@ -42,6 +43,10 @@ export default class MovieStore {
         return toJS(this._imdbMovies);
     };
 
+    get subject() {
+        return this._subject;
+    }
+
     getMovieByImdbId(movies: IMovies[]) {
         const result = movies.map(async (movie) => {
            return await FindMovieByImdbId(movie.imdb_id);
@@ -52,16 +57,29 @@ export default class MovieStore {
     };
 
     async getMovie(movie: string) {
-        const local: any = localStorage.getItem('movies');
-        const movies = JSON.parse(local);
+        const localMoives: any = localStorage.getItem('movies');
+        const movies = JSON.parse(localMoives);
         const result = movies.find((item: any) => item.imdb_id === movie);
         this.setMovie(result);
     };
 
-    async getMovies() {
+    async getMoviesBySubject(subject: string) {
         try {
-            const response = await FindPopularMovies();
-            this.setMovies(response);
+            localStorage.setItem('subject', subject);
+            this.setSubject(subject);
+            const response = await FindMovie(subject);
+            console.log(response);
+            this.getMovieByImdbId(response);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    async getMoviesByGenre(subject: string, genre: string) {
+        try {
+            localStorage.setItem('subject', subject);
+            this.setSubject(subject);
+            const response = await FindMovieByGenre(genre);
             this.getMovieByImdbId(response);
         } catch (e) {
             console.log(e);

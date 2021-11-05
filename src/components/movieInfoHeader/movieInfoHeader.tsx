@@ -15,7 +15,7 @@ export const MovieInfoHeader = observer(() => {
     };
 
     return (
-        <div className="card mb-3">
+        <div className="card">
             <div className="bg-secondary d-flex justify-content-between p-3 text-white">
                 <div>
                     <h1 className="mobile__title">{ title }</h1>
@@ -26,7 +26,7 @@ export const MovieInfoHeader = observer(() => {
                     </ListGroup>
                 </div>
                 <div className="d-block">
-                <h1 className="mobile__title" style={{textAlign: 'center'}}>IMDb RATING</h1>
+                <h1 className="mobile__title align-middle">IMDb RATING</h1>
                     <ListGroup horizontal className="justify-content-center">
                         <ListGroup.Item className="mobile p-2">
                             <i className="fas fa-star text-warning"></i>

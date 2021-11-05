@@ -23,17 +23,21 @@ export const MoviesList= ({ results }: MoviesPropsList) => {
             </Card.Body>
             <ListGroup className="list-group-flush">
                 <ListGroupItem className="mx-auto p-0">
-                    {gen.map((genre: any, i: any, arr: any) => {
-                        arr.length = 3;
-                        return (
-                            <big 
-                                className="text" 
-                                key={i}
-                                style={{ color: 'black', margin: '0 .5em' }}>
-                                    { genre.genre }
-                            </big>
-                        )
-                    })}
+                    {
+                        gen ?
+                        gen.map((genre: any, i: any, arr: any) => {
+                            arr.length = 3;
+                            return (
+                                <big 
+                                    className="text" 
+                                    key={i}
+                                    style={{ color: 'black', margin: '0 .5em' }}>
+                                        { genre.genre }
+                                </big>
+                            )
+                        }):
+                        null
+                    }
                 </ListGroupItem>
                 <ListGroupItem className="mx-auto">
                     <i 

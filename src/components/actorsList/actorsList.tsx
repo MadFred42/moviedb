@@ -31,8 +31,8 @@ export const ActorsList = observer(({movieId}: IMovieIdProps) => {
                             const { image_url, imdb_id, name, role } = actor;
                             array.length = 8;
                             return (  
-                                <Col>
-                                    <Card className="border-0" key={index}>
+                                <Col key={index}>
+                                    <Card className="border-0">
                                         <Card.Img 
                                             alt="creators"
                                             className="rounded-circle mobile__img mx-auto"
